@@ -98,9 +98,11 @@ class App extends Component {
           />
           <div
             onMouseDown={() => {
-              this.setState({
-                gameStatus: 'wow',
-              });
+              if (this.state.gameStatus !== 'ended') {
+                this.setState({
+                  gameStatus: 'wow',
+                });
+              }
             }}>
             <Board
               openCells={this.state.openCells}
