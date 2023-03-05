@@ -32,6 +32,7 @@ class Board extends Component {
           hasMine: false,
           hasFlag: false,
           hasQuestion: false,
+          isRed: false,
         });
       }
     }
@@ -87,29 +88,28 @@ class Board extends Component {
     asyncCountMines.then((numberOfMines) => {
       let rows = this.state.rows;
 
-      let current = rows[cell.y][cell.x];
-
-      if (current.hasMine && this.props.openCells === 0) {
+      if (cell.hasMine && this.props.openCells === 0) {
         console.log('mine was on first click');
         let newRows = this.createBoard(this.props);
         this.setState({ rows: newRows }, () => {
           this.open(cell);
         });
       } else {
-        if (!cell.hasFlag && !current.isOpen) {
+        if (!cell.hasFlag && !cell.isOpen) {
           this.props.onCellClick();
 
-          current.isOpen = true;
-          current.count = numberOfMines;
+          cell.isOpen = true;
+          cell.count = numberOfMines;
 
           this.setState({ rows });
 
-          if (!current.hasMine && numberOfMines === 0) {
+          if (!cell.hasMine && numberOfMines === 0) {
             this.openAroundCell(cell);
           }
 
-          if (current.hasMine && this.props.openCells !== 0) {
-            this.openAllMines(cell);
+          if (cell.hasMine && this.props.openCells !== 0) {
+            this.openAllMines();
+            cell.isRed = true;
             this.props.endGame();
           }
         }
@@ -153,13 +153,14 @@ class Board extends Component {
     }
   };
 
-  openAllMines = (cell) => {
+  openAllMines = () => {
     let rows = this.state.rows;
 
     for (let row = 0; row < rows.length; row++) {
       for (let col = 0; col < rows[row].length; col++) {
         if (rows[row][col].hasMine) {
-          this.open(rows[row][col]);
+          rows[row][col].isOpen = true;
+          this.setState({ rows });
         }
       }
     }

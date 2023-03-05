@@ -44,6 +44,19 @@ const Cell = (props) => {
   let cell = () => {
     if (props.data.isOpen) {
       if (props.data.hasMine) {
+        if (props.data.isRed) {
+          return (
+            <div
+              className="cell"
+              onContextMenu={(e) => {
+                e.preventDefault();
+              }}
+              onClick={() => props.open(props.data)}>
+              <img src={bomb_red} alt="" />
+            </div>
+          );
+        }
+
         return (
           <div
             className="cell"
