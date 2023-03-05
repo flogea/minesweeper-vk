@@ -56,14 +56,14 @@ const BoardHead = (props) => {
       }
     });
 
-    currentFlags = (
+    currentArgument = (
       <>
         <img src={hundreds} alt="" />
         <img src={dozens} alt="" />
         <img src={units} alt="" />
       </>
     );
-    return currentFlags;
+    return currentArgument;
   };
 
   return (
