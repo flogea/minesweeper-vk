@@ -45,8 +45,14 @@ const BoardHead = (props) => {
     });
 
     arrOfNums.map((num, index) => {
-      if (index === Math.floor(currentArgument / 10)) {
-        dozens = num;
+      if (currentArgument < 100) {
+        if (index === Math.floor(currentArgument / 10)) {
+          dozens = num;
+        }
+      } else {
+        if (index === Math.floor((currentArgument % 100) / 10)) {
+          dozens = num;
+        }
       }
     });
 
